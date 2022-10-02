@@ -35,7 +35,7 @@ const Cita = ({cita, borrarCita}) => {
               </Row>
             </Card.Body>
             <Card.Footer className='text-end'>
-              <Button variant='danger' onClick={() => borrarCita(cita)}>Borrar</Button>
+              <Button variant='danger' onClick={() => borrarCita(cita.ID)}>Borrar</Button>
             </Card.Footer>
           </Card>
         </Col>

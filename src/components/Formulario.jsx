@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Row} from "react-bootstrap";
 import ListaCitas from "./ListaCitas";
 
 const Formulario = () => {
+  const citasLocalStorage = JSON.parse(localStorage.getItem('arregoCitasStorage')) || [];
   const [nombreMascota, setNombreMascota] = useState('');
   const [nombrePersona, setNombrePersona] = useState('');
   const [fecha, setFecha] = useState('');
   const [hora, setHora] = useState('');
   const [sintomas, setSintomas] = useState('');
-  const [arregloCitas, setArregloCitas] = useState([]);
+  const [arregloCitas, setArregloCitas] = useState(citasLocalStorage);
   const [ID, setID] = useState(1);
+
+  useEffect(() => {
+    localStorage.setItem('arregoCitasStorage', JSON.stringify(arregloCitas))
+  }, [arregloCitas]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,8 +27,8 @@ const Formulario = () => {
     setID(ID + 1);
   }
 
-  const borrarCita = (cita) => {
-    let arregloModificado = arregloCitas.filter((item) => item.ID !== cita.ID);
+  const borrarCita = (id) => {
+    let arregloModificado = arregloCitas.filter((item) => item.ID !== id);
     setArregloCitas(arregloModificado);
   }
 
