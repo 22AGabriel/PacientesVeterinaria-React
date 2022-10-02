@@ -1,7 +1,7 @@
 import { Row } from "react-bootstrap";
 import Cita from "./Cita";
 
-const ListaCitas = ({arregloCitas}) => {
+const ListaCitas = ({arregloCitas, borrarCita}) => {
   if(arregloCitas.length === 0){
     return (
       <div className="w-form border text-center rounded p-3 my-3">
@@ -15,7 +15,7 @@ const ListaCitas = ({arregloCitas}) => {
         <h4 className="text-center">Administrador de citas</h4>
         <Row>
           {
-            arregloCitas.map((cita, posicion) => <Cita key={posicion} cita={cita}></Cita>)
+            arregloCitas.map((cita, posicion) => <Cita key={posicion} cita={cita} borrarCita={borrarCita}></Cita>)
           }
         </Row>
       </div>

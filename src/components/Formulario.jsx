@@ -9,15 +9,22 @@ const Formulario = () => {
   const [hora, setHora] = useState('');
   const [sintomas, setSintomas] = useState('');
   const [arregloCitas, setArregloCitas] = useState([]);
+  const [ID, setID] = useState(1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setArregloCitas([...arregloCitas, {nombreMascota, nombrePersona, fecha, hora, sintomas}]);
+    setArregloCitas([...arregloCitas, {ID, nombreMascota, nombrePersona, fecha, hora, sintomas}]);
     setNombreMascota('');
     setNombrePersona('');
     setFecha('');
     setHora('');
     setSintomas('');
+    setID(ID + 1);
+  }
+
+  const borrarCita = (cita) => {
+    let arregloModificado = arregloCitas.filter((item) => item.ID !== cita.ID);
+    setArregloCitas(arregloModificado);
   }
 
   return (
@@ -75,7 +82,7 @@ const Formulario = () => {
           </div>
         </Form>
       </div>
-      <ListaCitas arregloCitas={arregloCitas}></ListaCitas>
+      <ListaCitas arregloCitas={arregloCitas} borrarCita={borrarCita}></ListaCitas>
     </>
   );
 };

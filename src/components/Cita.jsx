@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 
-const Cita = ({cita}) => {
+const Cita = ({cita, borrarCita}) => {
     return (
         <Col sm={12} md={6} className='mb-3'>
           <Card>
@@ -35,7 +35,7 @@ const Cita = ({cita}) => {
               </Row>
             </Card.Body>
             <Card.Footer className='text-end'>
-              <Button variant='danger'>Borrar</Button>
+              <Button variant='danger' onClick={() => borrarCita(cita)}>Borrar</Button>
             </Card.Footer>
           </Card>
         </Col>
