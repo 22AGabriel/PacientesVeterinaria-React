@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Row} from "react-bootstrap";
 import ListaCitas from "./ListaCitas";
+import { v4 as uuidv4 } from 'uuid';
 
 const Formulario = () => {
   const citasLocalStorage = JSON.parse(localStorage.getItem('arregoCitasStorage')) || [];
@@ -10,7 +11,7 @@ const Formulario = () => {
   const [hora, setHora] = useState('');
   const [sintomas, setSintomas] = useState('');
   const [arregloCitas, setArregloCitas] = useState(citasLocalStorage);
-  const [ID, setID] = useState(1);
+  const [ID, setID] = useState(uuidv4());
 
   useEffect(() => {
     localStorage.setItem('arregoCitasStorage', JSON.stringify(arregloCitas))
@@ -24,7 +25,7 @@ const Formulario = () => {
     setFecha('');
     setHora('');
     setSintomas('');
-    setID(ID + 1);
+    setID(uuidv4());
   }
 
   const borrarCita = (id) => {
