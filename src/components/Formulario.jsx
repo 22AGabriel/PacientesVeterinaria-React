@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Row} from "react-bootstrap";
 import ListaCitas from "./ListaCitas";
 import { v4 as uuidv4 } from 'uuid';
+import Swal from 'sweetalert2'
+import { validarNombre, validarHoraFecha, validarSintomas } from "../helpers";
 
 const Formulario = () => {
   const citasLocalStorage = JSON.parse(localStorage.getItem('arregoCitasStorage')) || [];
@@ -19,13 +21,54 @@ const Formulario = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setArregloCitas([...arregloCitas, {ID, nombreMascota, nombrePersona, fecha, hora, sintomas}]);
-    setNombreMascota('');
-    setNombrePersona('');
-    setFecha('');
-    setHora('');
-    setSintomas('');
-    setID(uuidv4());
+    let mascotaValidada = validarNombre(nombreMascota);
+    let personaValidada = validarNombre(nombrePersona);
+    let fechaValidada = validarHoraFecha(fecha);
+    let horaValidada = validarHoraFecha(hora);
+    let sintomasValidados = validarSintomas(sintomas);
+    let verificarFecha = (fecha) =>{
+      if(citasLocalStorage.find((item) => item.fecha === fecha)){
+        return true
+      } else {
+        return false
+      }
+    }
+    let verificarHora = (hora) =>{
+      if(citasLocalStorage.find((item) => item.hora === hora)){
+        return true
+      } else {
+        return false
+      }
+    }
+
+    if(mascotaValidada && personaValidada && fechaValidada && horaValidada && sintomasValidados){
+      if(verificarHora(hora) && verificarFecha(fecha)){
+        Swal.fire(
+          'Horario ocupado!',
+          'Ya existe una cita cargada para ese horario, elije otro',
+          'warning'
+        )
+      } else {
+        setArregloCitas([...arregloCitas, {ID, nombreMascota, nombrePersona, fecha, hora, sintomas}]);
+        setNombreMascota('');
+        setNombrePersona('');
+        setFecha('');
+        setHora('');
+        setSintomas('');
+        setID(uuidv4());
+        Swal.fire(
+          'Datos cargados!',
+          'Se agendó la cita con éxito',
+          'success'
+        )
+      }
+    } else {
+      Swal.fire(
+        'Faltan datos!',
+        'Completa todos los campos para agendar la cita',
+        'error'
+      )
+    }
   }
 
   const borrarCita = (id) => {
