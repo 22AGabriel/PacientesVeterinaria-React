@@ -14,6 +14,7 @@ const Formulario = () => {
   const [sintomas, setSintomas] = useState('');
   const [arregloCitas, setArregloCitas] = useState(citasLocalStorage);
   const [ID, setID] = useState(uuidv4());
+  const [animal, setAnimal] = useState('');
 
   useEffect(() => {
     localStorage.setItem('arregoCitasStorage', JSON.stringify(arregloCitas))
@@ -49,11 +50,12 @@ const Formulario = () => {
           'warning'
         )
       } else {
-        setArregloCitas([...arregloCitas, {ID, nombreMascota, nombrePersona, fecha, hora, sintomas}]);
+        setArregloCitas([...arregloCitas, {ID, nombreMascota, nombrePersona, fecha, hora, sintomas, animal}]);
         setNombreMascota('');
         setNombrePersona('');
         setFecha('');
         setHora('');
+        setAnimal('');
         setSintomas('');
         setID(uuidv4());
         Swal.fire(
@@ -90,6 +92,14 @@ const Formulario = () => {
               onChange={(e) => setNombreMascota(e.target.value)}
               value={nombreMascota}
               ></Form.Control>
+            </Col>
+            <Form.Label column as="legend" sm={12} md={4}>Animal:</Form.Label>
+            <Col sm={12} md={8} className="mb-3">
+              <Form.Check onChange={(e) => setAnimal(e.target.id)} type="radio" label="Perro" name="formHorizontalRadios" id="perro"></Form.Check>
+              <Form.Check onChange={(e) => setAnimal(e.target.id)} type="radio" label="Gato" name="formHorizontalRadios" id="gato"></Form.Check>
+              <Form.Check onChange={(e) => setAnimal(e.target.id)} type="radio" label="Hamster" name="formHorizontalRadios" id="hamster"></Form.Check>
+              <Form.Check onChange={(e) => setAnimal(e.target.id)} type="radio" label="Conejo" name="formHorizontalRadios" id="conejo"></Form.Check>
+              <Form.Check onChange={(e) => setAnimal(e.target.id)} type="radio" label="Otro" name="formHorizontalRadios" id="otro"></Form.Check>
             </Col>
             <Form.Label column sm={12} md={4}>Nombre del dueño/a:</Form.Label>
             <Col sm={12} md={8} className="mb-3">
